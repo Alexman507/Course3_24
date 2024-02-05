@@ -1,5 +1,6 @@
+import datetime
 import json
-from datetime import datetime as dt
+import re
 
 
 def get_data():
@@ -8,7 +9,7 @@ def get_data():
         return data
 
 
-def correct_date():
+def filter_date():
     date_filtered = []
     data = get_data()
     for d in data:
@@ -17,15 +18,25 @@ def correct_date():
     return date_filtered
 
 
-def sorted_data():
-    data = correct_date()
+def sorted_date():
+    data = filter_date()
     data = sorted(data, key=lambda x: x.get('date'), reverse=True)
     return data
 
 
-def get_date():
-    x = sorted_data()
-    return dt.strptime(x.get("date"), format="%Y-%m-%d %H:%M:%S.%f")
+def format_date():
+    date_fix = []
+    data = sorted_date()
+    for dicts in data:
+        new_dicts = {}
+        for k, v in dicts.items():
+            if k == 'date':
+                result = re.sub('T', ' ', v)
+                result = datetime.datetime.strptime(result, '%Y-%m-%d %H:%M:%S.%f').strftime('%d.%m.%Y')
+                dicts[k] = result
+                new_dicts.update(dicts)
+            else:
+                new_dicts.update(dicts)
+        date_fix.append(new_dicts)
+    return date_fix
 
-
-print(sorted_data())
