@@ -57,8 +57,20 @@ def hide_data_payment():
                     hided_digits = '*' * 2 + hided[-4:]
                     sum_words = ' '.join(words)
                     result = sum_words + ' ' + hided_digits
-                    dict_[k] = result
-                elif 'Visa' or 'Maestro' or 'MasterCard' in v:
+                    #dict_[k] = result
+                    continue
+
+                if 'Visa' in v or 'Maestro' in v or 'MasterCard' in v or 'МИР' in v:
+                    split_str = v.split(' ')
+                    words = split_str[0:-1]
+                    hided = split_str[-1]
+                    print(v)
+                    hided_digits = hided[:4] + ' ' + hided[4:6] + '**' + ' ' + '****' + hided[-4:]
+                    sum_words = ' '.join(words)
+                    #result = sum_words + ' ' + hided_digits
+                    #print(result)
+                    #dict_[k] = result
+                else:
                     continue
             except:
                 continue
@@ -66,7 +78,7 @@ def hide_data_payment():
 
         date_fix.append(dict_)
     #return date_fix
-    print(date_fix)
+    #print(date_fix)
 
 hide_data_payment()
 #print(format_date())
