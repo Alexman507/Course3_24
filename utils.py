@@ -71,23 +71,17 @@ def hide_data_payment():
                     dict_[k] = result
 
             except:
-                dict_[k] = v
+                continue
 
-            # date_fix.append(dict_)
-    print(len(data))
+    # print(len(data))
     return data
-    # print(date_fix)
 
 
 def slice_payment_data():
     data = hide_data_payment()
     data_slice = data[:5]
-    for item in data_slice:
-        print(item)
-    pass
-
-    # return data_slice
+    return data_slice
 
 
-# hide_data_payment()
-print(hide_data_payment())
+#slice_payment_data()
+#print(hide_data_payment())
