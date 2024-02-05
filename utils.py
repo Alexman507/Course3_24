@@ -42,43 +42,52 @@ def format_date():
 
 
 def hide_data_payment():
-
     date_fix = []
     data = format_date()
     for dict_ in data:
         for k, v in dict_.items():
-            #print(k, v)
+            # print(k, v)
             try:
                 if 'Счет' in v:
                     split_str = v.split(' ')
                     words = split_str[0:-1]
                     hided = split_str[-1]
-                    #print(split_str)
+                    # print(split_str)
                     hided_digits = '*' * 2 + hided[-4:]
                     sum_words = ' '.join(words)
                     result = sum_words + ' ' + hided_digits
-                    #dict_[k] = result
+                    dict_[k] = result
                     continue
 
                 if 'Visa' in v or 'Maestro' in v or 'MasterCard' in v or 'МИР' in v:
                     split_str = v.split(' ')
                     words = split_str[0:-1]
                     hided = split_str[-1]
-                    print(v)
+                    # print(v)
                     hided_digits = hided[:4] + ' ' + hided[4:6] + '**' + ' ' + '****' + hided[-4:]
                     sum_words = ' '.join(words)
-                    #result = sum_words + ' ' + hided_digits
-                    #print(result)
-                    #dict_[k] = result
-                else:
-                    continue
+                    result = sum_words + ' ' + hided_digits
+                    # print(result)
+                    dict_[k] = result
+
             except:
-                continue
+                dict_[k] = v
+
+            # date_fix.append(dict_)
+    print(len(data))
+    return data
+    # print(date_fix)
 
 
-        date_fix.append(dict_)
-    #return date_fix
-    #print(date_fix)
+def slice_payment_data():
+    data = hide_data_payment()
+    data_slice = data[:5]
+    for item in data_slice:
+        print(item)
+    pass
 
-hide_data_payment()
-#print(format_date())
+    # return data_slice
+
+
+# hide_data_payment()
+print(hide_data_payment())
