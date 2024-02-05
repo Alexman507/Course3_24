@@ -83,5 +83,31 @@ def slice_payment_data():
     return data_slice
 
 
-#slice_payment_data()
-#print(hide_data_payment())
+def body_payment_data():
+    body_data = []
+    data = slice_payment_data()
+    for k in data:
+        # print(k)
+        if k.get('from'):
+            body_data.append({
+                'date': k.get('date'),
+                'description': k.get('description'),
+                'from': k.get('from'),
+                'to': k.get('to'),
+                'amount': k.get('operationAmount').get('amount'),
+                'name': k.get('operationAmount').get('currency').get('name'),
+            })
+        else:
+            body_data.append({
+                'date': k.get('date'),
+                'description': k.get('description'),
+                'from': '',
+                'to': k.get('to'),
+                'amount': k.get('operationAmount').get('amount'),
+                'name': k.get('operationAmount').get('currency').get('name'),
+            })
+    return body_data
+
+
+body_payment_data()
+# print(slice_payment_data())
