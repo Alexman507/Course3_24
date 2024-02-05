@@ -1,17 +1,11 @@
 import json
 from datetime import datetime as dt
-import re
 
 
 def get_data():
     with open('data/operations.json', 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
         return data
-
-
-def get_dumps():
-    data = json.dumps(get_data(), ensure_ascii=False, sort_keys=True, indent=4)
-    return data
 
 
 def correct_date():
@@ -29,8 +23,9 @@ def sorted_data():
     return data
 
 
-def get_date(x, format="%Y-%m-%d %H:%M:%S.%f"):
-    return dt.strptime(x.get("date"), format)
+def get_date():
+    x = sorted_data()
+    return dt.strptime(x.get("date"), format="%Y-%m-%d %H:%M:%S.%f")
 
 
-print(correct_date())
+print(sorted_data())
