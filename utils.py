@@ -4,12 +4,20 @@ import re
 
 
 def get_data():
+    """
+        Выгружает данные в состоянии "как есть"
+        :return: List of dictionaries
+        :rtype: list"""
     with open('data/operations.json', 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
         return data
 
 
 def filter_date():
+    """
+        Фильтрует данные, выгруженные из json файла, по ключу 'EXECUTED'
+        :return: List of dictionaries
+        :rtype: list"""
     date_filtered = []
     data = get_data()
     for d in data:
@@ -19,12 +27,20 @@ def filter_date():
 
 
 def sorted_date():
+    """
+        Сортирует в списке словарей по ключу 'date' в порядке убывания
+        :return: List of dictionaries
+        :rtype: list"""
     data = filter_date()
     data = sorted(data, key=lambda x: x.get('date'), reverse=True)
     return data
 
 
 def format_date():
+    """
+       Убирает из значения 'date' букву "Т", меняет формат на '%d.%m.%Y', переносит в другой список словарей
+       :return: List of dictionaries
+       :rtype: list"""
     date_fix = []
     data = sorted_date()
     for dict_ in data:
@@ -42,7 +58,10 @@ def format_date():
 
 
 def hide_data_payment():
-    date_fix = []
+    """
+       Скрывает номер счёта и номер карты (если есть)
+       :return: List of dictionaries
+       :rtype: list"""
     data = format_date()
     for dict_ in data:
         for k, v in dict_.items():
@@ -78,12 +97,20 @@ def hide_data_payment():
 
 
 def slice_payment_data():
+    """
+       Перекладывает 5 первых словарей
+       :return: List of dictionaries
+       :rtype: list"""
     data = hide_data_payment()
     data_slice = data[:5]
     return data_slice
 
 
 def body_payment_data():
+    """
+    Перекладывает переменные для вывода на экран
+    :return: List of dictionaries
+    :rtype: list"""
     body_data = []
     data = slice_payment_data()
     for k in data:
@@ -109,5 +136,5 @@ def body_payment_data():
     return body_data
 
 
-body_payment_data()
+# body_payment_data()
 # print(slice_payment_data())
