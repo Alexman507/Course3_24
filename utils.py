@@ -3,12 +3,14 @@ import json
 import re
 
 
+
 def get_data():
     """
         Выгружает данные в состоянии "как есть"
         :return: List of dictionaries
         :rtype: list"""
-    with open('data/operations.json', 'r', encoding='utf-8') as json_file:
+    json_config = 'data/operations.json'
+    with open(json_config, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
         return data
 
@@ -137,4 +139,4 @@ def body_payment_data():
 
 
 # body_payment_data()
-# print(slice_payment_data())
+# print(get_data())
