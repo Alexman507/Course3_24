@@ -15,18 +15,22 @@ def get_dumps():
 
 
 def correct_date():
-    d = get_dumps()
-    d = (i) for i in d.replace('T', ' ')
-
-
-def get_date(x, format="%Y-%m-%d" + "T" + "%H:%M:%S.%f"):
-    return dt.strptime(x.get("date"), format)
+    date_filtered = []
+    data = get_data()
+    for d in data:
+        if d.get('state') == 'EXECUTED' and d.get('date'):
+            date_filtered.append(d)
+    return date_filtered
 
 
 def sorted_data():
-    data = get_data()
-    data = sorted(data, key=get_date, reverse=True)
+    data = correct_date()
+    data = sorted(data, key=lambda x: x.get('date'), reverse=True)
     return data
 
 
-print(get_dumps())
+def get_date(x, format="%Y-%m-%d %H:%M:%S.%f"):
+    return dt.strptime(x.get("date"), format)
+
+
+print(correct_date())
